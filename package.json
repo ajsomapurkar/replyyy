@@ -1,0 +1,33 @@
+{
+  "name": "relay",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "db:start": "bash infra/scripts/local-db.sh start",
+    "migrate": "npm -w @relay/api run migrate",
+    "seed": "npm -w @relay/api run seed",
+    "reset": "npm -w @relay/api run migrate && npm -w @relay/api run seed",
+    "dev": "concurrently -k -n api,console,rider,driver -c gray,magenta,yellow,green \"npm -w @relay/api run dev\" \"npm -w @relay/web run dev\" \"npm -w @relay/rider run dev\" \"npm -w @relay/driver run dev\"",
+    "build": "npm -w @relay/web run build && npm -w @relay/rider run build && npm -w @relay/driver run build",
+    "typecheck": "tsc -p packages/contracts && tsc -p packages/ui && tsc -p apps/api --noEmit && tsc -p apps/web --noEmit && tsc -p apps/rider --noEmit && tsc -p apps/driver --noEmit",
+    "test": "npm -w @relay/api test && npm -w @relay/web test",
+    "test:e2e": "python3 -I e2e/demo_story.py",
+    "dev:api": "npm -w @relay/api run dev",
+    "dev:console": "npm -w @relay/web run dev",
+    "dev:rider": "npm -w @relay/rider run dev",
+    "dev:driver": "npm -w @relay/driver run dev",
+    "build:prod": "VITE_BASE=/rider/ npm -w @relay/rider run build && VITE_BASE=/driver/ npm -w @relay/driver run build && VITE_BASE=/console/ npm -w @relay/web run build",
+    "start:prod": "npm -w @relay/api run bootstrap && npm -w @relay/api run start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

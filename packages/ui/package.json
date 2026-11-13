@@ -1,0 +1,2 @@
+{ "name": "@relay/ui", "version": "1.0.0", "private": true, "type": "module", "main": "src/index.ts", "types": "src/index.ts",
+  "dependencies": { "@relay/contracts": "*", "@tanstack/react-query": "^5.60.5", "lucide-react": "^0.460.0", "react": "^18.3.1" } }

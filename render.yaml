@@ -1,0 +1,24 @@
+# Render Blueprint — one web service serves the API, WebSocket and all three apps.
+# Render dashboard → New → Blueprint → pick this repo. DATABASE_URL comes from the committed .env file.
+services:
+  - type: web
+    name: relay
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm ci && npm run build:prod
+    startCommand: npm run start:prod
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: SIMULATION
+        value: "on"
+      - key: BACKGROUND_DEMAND
+        value: "on"
+      - key: SIM_SPEED
+        value: "4"
+      - key: ROUTING_PROVIDER
+        value: mock
+      - key: CORS_ORIGIN
+        value: "*"
